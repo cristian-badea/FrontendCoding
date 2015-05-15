@@ -14,11 +14,6 @@ hrApp.controller('JobAddController', ['$scope', '$http', '$location', 'commonRes
             this.job = {};
         };
 
-
-        /**
-         * Persist an employee
-         * @param addEmployee - employee to be persisted
-         */
         $scope.create = function (addJob) {
             $http({url: $commonResourcesFactory.addJobUrl, method: 'POST',data:addJob}).
                 success(function (data) {

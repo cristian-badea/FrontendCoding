@@ -1,8 +1,8 @@
-hrApp.controller('JobViewController', ['$scope', '$http', '$routeParams', '$location',
-    function($scope, $http, $routeParams, $location) {
+hrApp.controller('JobViewController', ['$scope', '$http', '$routeParams', '$location', 'commonResourcesFactory',
+    function($scope, $http, $routeParams, $location, commonResourcesFactory) {
 
         // TODO get job by id
-        $http({url: 'http://hrapp-zth.rhcloud.com/hrapp/jobs/findOne/'+$routeParams.jobid, method: 'GET'}).
+        $http({url: commonResourcesFactory.findOneJobUrl+$routeParams.jobid, method: 'GET'}).
             success(function (data) {
                 $scope.job = data;
             });
@@ -12,4 +12,10 @@ hrApp.controller('JobViewController', ['$scope', '$http', '$routeParams', '$loca
             $location.url('/joblist');
         }
 
+        $scope.delete = function() {
+            $http({url : commonResourcesFactory.deleteJobUrl + $routeParams.jobid, method: 'DELETE'}).
+                success(function(){
+                    $location.url('/joblist');
+                });
+        }
     }]);

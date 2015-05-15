@@ -46,7 +46,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="form-group" ng-class="{ 'has-error': employeeAddForm.hireDate.$invalid && employeeAddForm.hireDate.$dirty }">
+                    <div class="form-group" ng-class="{ 'has-error': (employeeAddForm.hireDate.$invalid && employeeAddForm.hireDate.$dirty) || (employeeAddForm.hireDate.$pristine) }">
                         <label for="hireDate">Hire Date:</label>
                         <input type="text" id="hireDate" name="hireDate" class="form-control" ng-model="employee.hireDate"
                                placeholder="Hire Date" ng-pattern="datePattern" required>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="form-group" ng-class="{ 'has-error': employeeAddForm.commissionPct.$invalid && employeeAddForm.commissionPct.$dirty }">
+                    <div class="form-group" ng-class="{ 'has-error': (employeeAddForm.commissionPct.$invalid && employeeAddForm.commissionPct.$dirty) || (employeeAddForm.commissionPct.$pristine) }">
                         <label for="commissionPct">Commission:</label>
                         <input type="text" id="commissionPct" name="commissionPct" class="form-control" ng-model="employee.commissionPct"
                                placeholder="Commission" ng-pattern="commissionPattern" required>
