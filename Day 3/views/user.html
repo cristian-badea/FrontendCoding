@@ -1,0 +1,15 @@
+<div class="container">
+    <p>First Name : <input type="text" id="firstName" ng-model="firstName"> </p>
+    <p>Last Name : <input type="text" id="lastName" ng-model="lastName"> </p>
+    <p>CNP : <input type="text" id="cnp" ng-model="cnp"> </p>
+    <p>Age : <input type="text" id="age" ng-model="age"> </p>
+    <p>Sex : <input type="text" id="sex" ng-model="sex"> </p>
+
+    <div>
+        <button ng-click="backButton()">Back</button>
+        <button ng-click="resetButton()">Reset</button>
+        <button ng-click="saveButton()">Save</button>
+        <button ng-click="toggleShowButton">Show/Hide User List</button>
+    </div>
+    <div ng-include="userList.html"></div>
+</div>
