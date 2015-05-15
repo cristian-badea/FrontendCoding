@@ -61,6 +61,7 @@ function showList()
     myTable += '</table>';
     var container = document.getElementById("listContainer");
     container.innerHTML = myTable;
+    showTableInfo();
 }
 
 var Employee = function(firstName, lastName, phone, salary)
@@ -143,29 +144,44 @@ function showTableInfo()
     }
 
     //parsare lastName
-    var lastNames = new Array();
+    var lastNames = {}, counter = 0;
     for(var i in employeesList)
     {
         if(lastNames[employeesList[i].lastName] == undefined)
         {
             lastNames[employeesList[i].lastName] = 1;
+            counter++;
         }
     }
-    var uniqueLastNames = lastNames.length;
+    var uniqueLastNames = counter;
 
     //parsarePhone
-    var digits = [0,0,0,0,0,0,0,0,0,0];
-    for(var i in employeesList)
+    var digits = [];
+    for(i=0;i<10;i++)
     {
-       for(j=0;j<employeesList[i].phone.length;j++)
-       {
-           digits[parseInt(employeesList[i].phone[j])]++;
-       }
+        digits.push({ number: i, counter: 0});
     }
-    digits.sort();
-    var digitsMessage = "";
-    for(i=0;i<digits.length && i<5; i++)
-        digitsMessage += digits[i] + ",";
+    for(var index in employeesList)
+    {
+        for(var j = 0; j< employeesList[index].phone.length; j++)
+        {
+            digits[parseInt(employeesList[index].phone[j])].counter++;
+        }
+    }
+
+    digits.sort(function(digit1,digit2)
+    {
+        if(digit1.counter < digit2.counter)
+            return 1;
+        if(digit1.counter > digit2.counter)
+            return -1;
+        return 0;
+    })
+    digitsMessage = "";
+    for(i=0;i<5;i++)
+    {
+        digitsMessage += digits[i].number + ",";
+    }
 
     //parsareSalary
     var avgSal = 0.0;
@@ -186,8 +202,7 @@ function showTableInfo()
     if(table = document.getElementById("EmployeesTable"))
     {
         //concat
-
-
+        table.innerHTML += line;
     }
     else
     {
@@ -195,4 +210,95 @@ function showTableInfo()
         table = document.getElementById("listContainer");
         table.innerHTML = '<table border="1" class="table" id="EmployeesTable">' + line + '</table>';
     }
+}
+
+function SortEmployees(){
+    var sortCriteria = document.getElementById("sortByInput").value;
+    switch (sortCriteria){
+        case "1":
+            employeesList.sort(
+                function(employee1,employee2) {
+                    if(employee1.firstName < employee2.firstName){
+                        return -1;
+                    }
+                    if(employee1.firstName > employee2.firstName){
+                        return 1;
+                    }
+                    return 0;
+                });
+            break;
+        case  "2":
+            employeesList.sort(
+                function(employee1,employee2) {
+                    if(employee1.lastName < employee2.lastName){
+                        return -1;
+                    }
+                    if(employee1.lastName > employee2.lastName){
+                        return 1;
+                    }
+                    return 0;
+                });
+            break;
+        case "3":
+            employeesList.sort(
+                function(employee1,employee2) {
+                    if(employee1.phone < employee2.phone){
+                        return -1;
+                    }
+                    if(employee1.phone > employee2.phone){
+                        return 1;
+                    }
+                    return 0;
+                });
+            break;
+        case "4":
+            employeesList.sort(
+                function(employee1,employee2) {
+                    if(employee1.salary < employee2.salary){
+                        return -1;
+                    }
+                    if(employee1.salary > employee2.salary){
+                        return 1;
+                    }
+                    return 0;
+                });
+            break;
+    }
+    showList();
+}
+function SearchEmployees(){
+    var criteria = document.getElementById("searchInput").value;
+    var myTable =
+        '<table border="1" class="table" id="EmployeesTable">' +
+        '<tr>' +
+        '<th>First Name</th>' +
+        '<th>LastName</th>' +
+        '<th>Phone</th>' +
+        '<th>Salary</th>' +
+        '<th>ShowUser</th>' +
+        '<th>DeleteUser</th>' +
+        '</tr>';
+
+    for(var i in employeesList) {
+        if(employeesList[i].firstName.indexOf(criteria) != -1 || employeesList[i].lastName.indexOf(criteria)!= -1 ||
+            employeesList[i].phone.indexOf(criteria)!= -1 || employeesList[i].salary.toString().indexOf(criteria) != -1)
+
+        myTable +=
+            '<tr>' +
+            '<td>' + employeesList[i].firstName + '</td>' +
+            '<td>' + employeesList[i].lastName + '</td>' +
+            '<td>' + employeesList[i].phone + '</td>' +
+            '<td>' + employeesList[i].salary + '</td>' +
+            '<td><button id="showUser' + i + '" onclick="showCurentUser(' + i + ')">Show User</button></td>' +
+            '<td><button id="deleteUser' + i + '" onclick="deleteCurentUser(' + i + ')">Delete</button></td>' +
+            '</tr>';
+    }
+    myTable += '</table>';
+    var container = document.getElementById("listContainer");
+    container.innerHTML = myTable;
+    showTableInfo();
+
+
+
+
 }

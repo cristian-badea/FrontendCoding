@@ -13,7 +13,7 @@
         <div class="panel-heading description">
             Employee List
         </div>
-        <div class="panel-body">
+        <div class="panel-body container">
             <div>
                 <p class="col-md-3">
                     <button type="button" onclick="showList()">Show List</button>
@@ -30,6 +30,14 @@
             </div>
             <div id="salaryTotal">
 
+            </div>
+            <div class="col-md-6">
+                Sort Employees (1,2,3,4): <input id="sortByInput" type="text" />
+                <button id="sortByButton" onclick="SortEmployees()">Sort</button>
+            </div>
+            <div class="col-md-6">
+                Search: <input id="searchInput" type="text" />
+                <button id="searchButton" onclick="SearchEmployees()">Sort</button>
             </div>
         </div>
         <div>
